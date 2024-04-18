@@ -16,6 +16,14 @@ public class BankManager {
         }
     }
 
+    public void depositToSaving(double amount) {
+        try {
+            savingsAccount.deposit(amount);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public boolean withdrawFromChecking(double amount) {
         return checkingAccount.withdraw(amount);
     }
@@ -57,6 +65,8 @@ public class BankManager {
     public double getCheckingDailyDeposited() {
         return checkingAccount.getDailyDeposited();
     }
+
+    public double getSavingDailyDeposited() {return savingsAccount.getDailyDeposited();}
 
     public double getCheckingDailyWithdrawn() {
         return checkingAccount.getDailyWithdrawn();

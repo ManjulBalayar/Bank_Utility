@@ -1,6 +1,8 @@
 public class SavingsAccount extends Account {
     private static final double DAILY_TRANSFER_LIMIT = 100.0;
+    private static final double DAILY_DEPOSIT_LIMIT = 5000.0;
     private double dailyTransferred = 0.0;
+    private double dailyDeposited = 0.0;
 
     public SavingsAccount(String accountId, double initialBalance) {
         super(accountId, initialBalance);
@@ -8,7 +10,11 @@ public class SavingsAccount extends Account {
 
     @Override
     public void deposit(double amount) {
+        if (dailyDeposited + amount > DAILY_DEPOSIT_LIMIT) {
+            throw new IllegalArgumentException("Deposit limit exceeded");
+        }
         balance += amount;
+        dailyDeposited += amount;
     }
 
     @Override
@@ -45,6 +51,10 @@ public class SavingsAccount extends Account {
 
     public void setDailyTransferred(double dailyTransferred) {
         this.dailyTransferred = dailyTransferred;
+    }
+
+    public double getDailyDeposited() {
+        return dailyDeposited;
     }
 
 }
