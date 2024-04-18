@@ -20,8 +20,9 @@ public class BankingSystemMain {
             System.out.println("4. Transfer from Savings to Checking");
             System.out.println("5. Check Balances");
             System.out.println("6. Check Daily Transaction Limits");
-            System.out.println("7. Move to Next Day");  // New Option for next day
-            System.out.println("8. Exit");
+            System.out.println("7. Check Your Bank Account Numbers");
+            System.out.println("8. Move to Next Day");
+            System.out.println("9. Exit");
 
             int choice = scanner.nextInt();
             switch (choice) {
@@ -44,11 +45,14 @@ public class BankingSystemMain {
                     displayDailyLimits();
                     break;
                 case 7:
+                    displayAccountNumbers();
+                    break;
+                case 8:
                     currentDay++;
                     System.out.println("Moving to Day: " + currentDay);
                     bankManager.endOfDayProcessing();  // Reset limits
                     break;
-                case 8:
+                case 9:
                     System.out.println("Resetting daily limits and exiting...");
                     bankManager.endOfDayProcessing();  // Reset limits
                     jsonManager.writeAccountsAndDay(bankManager.getAccounts(), currentDay);  // Save current day
@@ -58,6 +62,11 @@ public class BankingSystemMain {
                     System.out.println("Invalid option. Please try again.");
             }
         }
+    }
+
+    private static void displayAccountNumbers() {
+        System.out.println("Checking Account Number: " + bankManager.getCheckingAccount().getAccountId());
+        System.out.println("Savings Account Number: " + bankManager.getSavingsAccount().getAccountId());
     }
 
     private static void handleTransferFromSavingsToChecking() {

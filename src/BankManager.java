@@ -66,4 +66,11 @@ public class BankManager {
         return savingsAccount.getDailyTransferred();
     }
 
+    public CheckingAccount getCheckingAccount() {
+        return checkingAccount;
+    }
+
+    public SavingsAccount getSavingsAccount() {
+        return savingsAccount;
+    }
 }
