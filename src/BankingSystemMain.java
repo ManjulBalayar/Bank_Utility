@@ -13,16 +13,17 @@ public class BankingSystemMain {
         System.out.println("Welcome to The ATM Machine and the Utility Company Banking System");
         System.out.println("Today is Day: " + currentDay);
         while (true) {
-            System.out.println("\nPlease select an option:");
+            System.out.println("Please select an option:");
             System.out.println("1. Deposit to Checking Account");
-            System.out.println("2. Withdraw from Checking Account");
-            System.out.println("3. Transfer from Checking to Savings");
-            System.out.println("4. Transfer from Savings to Checking");
-            System.out.println("5. Check Balances");
-            System.out.println("6. Check Daily Transaction Limits");
-            System.out.println("7. Check Your Bank Account Numbers");
-            System.out.println("8. Move to Next Day");
-            System.out.println("9. Exit");
+            System.out.println("2. Deposit to Savings Account");
+            System.out.println("3. Withdraw from Checking Account");
+            System.out.println("4. Transfer from Checking to Savings");
+            System.out.println("5. Transfer from Savings to Checking");
+            System.out.println("6. Check Balances");
+            System.out.println("7. Check Daily Transaction Limits");
+            System.out.println("8. Check Your Bank Account Numbers");
+            System.out.println("9. Move to Next Day");
+            System.out.println("10. Exit");
 
             int choice = scanner.nextInt();
             switch (choice) {
@@ -30,29 +31,32 @@ public class BankingSystemMain {
                     handleDeposit();
                     break;
                 case 2:
-                    handleWithdrawal();
+                    handleSavingsDeposit();
                     break;
                 case 3:
-                    handleTransfer();
+                    handleWithdrawal();
                     break;
                 case 4:
-                    handleTransferFromSavingsToChecking();
+                    handleTransfer();
                     break;
                 case 5:
-                    displayBalances();
+                    handleTransferFromSavingsToChecking();
                     break;
                 case 6:
-                    displayDailyLimits();
+                    displayBalances();
                     break;
                 case 7:
-                    displayAccountNumbers();
+                    displayDailyLimits();
                     break;
                 case 8:
+                    displayAccountNumbers();
+                    break;
+                case 9:
                     currentDay++;
                     System.out.println("Moving to Day: " + currentDay);
                     bankManager.endOfDayProcessing();  // Reset limits
                     break;
-                case 9:
+                case 10:
                     System.out.println("Resetting daily limits and exiting...");
                     bankManager.endOfDayProcessing();  // Reset limits
                     jsonManager.writeAccountsAndDay(bankManager.getAccounts(), currentDay);  // Save current day
@@ -87,6 +91,12 @@ public class BankingSystemMain {
         bankManager.depositToChecking(amount);
     }
 
+    private static void handleSavingsDeposit() {
+        System.out.println("Enter amount to deposit into Savings Account:");
+        double amount = scanner.nextDouble();
+        bankManager.depositToSaving(amount);
+    }
+
     private static void handleWithdrawal() {
         System.out.println("Enter amount to withdraw from Checking Account:");
         double amount = scanner.nextDouble();
@@ -109,8 +119,10 @@ public class BankingSystemMain {
     }
 
     private static void displayDailyLimits() {
+        System.out.println("Your daily limits are: $5000 deposit for checkings and savings per day, $500 withdraw from checking, $100 transfer from savings to checking!");
         System.out.println("Checking Account Daily Deposited: $" + bankManager.getCheckingDailyDeposited());
         System.out.println("Checking Account Daily Withdrawn: $" + bankManager.getCheckingDailyWithdrawn());
+        System.out.println("Savings Account Daily Deposited: $" + bankManager.getSavingDailyDeposited());
         System.out.println("Savings Account Daily Transferred: $" + bankManager.getSavingsDailyTransferred());
     }
 }
