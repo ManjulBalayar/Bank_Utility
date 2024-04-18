@@ -12,14 +12,15 @@ Today is Day: 1
 
 Please select an option:
 1. Deposit to Checking Account
-2. Withdraw from Checking Account
-3. Transfer from Checking to Savings
-4. Transfer from Savings to Checking
-5. Check Balances
-6. Check Daily Transaction Limits
-7. Check Your Bank Account Numbers
-8. Move to Next Day
-9. Exit
+2. Deposit to Savings Account
+3. Withdraw from Checking Account
+4. Transfer from Checking to Savings
+5. Transfer from Savings to Checking
+6. Check Balances
+7. Check Daily Transaction Limits
+8. Check Your Bank Account Numbers
+9. Move to Next Day
+10. Exit
 
 ## Initial Setup
 
@@ -30,28 +31,31 @@ At the start of the first iteration, the day is set to 1, with both the checking
 - **Option 1: Deposit to Checking Account**
   - Allows deposits up to $5000 per day into the checking account. This can be accomplished in one or more transactions.
 
-- **Option 2: Withdraw from Checking Account**
+- **Option 2: Deposit to Savings Account**
+  - Allows deposits up to $5000 per day into the savings account. This can be accomplished in one or more transactions.
+
+- **Option 3: Withdraw from Checking Account**
   - Permits withdrawals up to $500 per day directly from the checking account, in one or more transactions.
 
-- **Option 3: Transfer from Checking to Savings**
+- **Option 4: Transfer from Checking to Savings**
   - Enables unlimited transfers from the checking to the savings account, provided there are sufficient funds.
 
-- **Option 4: Transfer from Savings to Checking**
+- **Option 5: Transfer from Savings to Checking**
   - Allows for transfers up to a maximum of $100 per day from the savings to the checking account.
 
-- **Option 5: Check Balances**
+- **Option 6: Check Balances**
   - Provides a real-time update on the balances of both the checking and savings accounts.
 
-- **Option 6: Check Daily Transaction Limits**
+- **Option 7: Check Daily Transaction Limits**
   - Displays whether the daily transaction limits for deposits, withdrawals, and transfers have been reached.
 
-- **Option 7: Check Your Bank Account Numbers**
+- **Option 8: Check Your Bank Account Numbers**
   - Displays the account numbers for both the checking and savings accounts.
 
-- **Option 8: Move to Next Day**
+- **Option 9: Move to Next Day**
   - Advances the system to the next day, resetting all daily transaction limits and preserving the current balances.
 
-- **Option 9: Exit**
+- **Option 10: Exit**
   - Exits the application, saving all current data including balances and the date to ensure continuity upon next login.
 
 ## System Requirements
