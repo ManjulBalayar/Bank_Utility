@@ -12,7 +12,6 @@ import java.util.List;
 public class JsonManager {
     private static final String BANKING_FILE = "banking.json";
     private JSONParser parser = new JSONParser();
-
     public Account[] readAccounts() {
         List<Account> accounts = new ArrayList<>();
         try (FileReader reader = new FileReader(BANKING_FILE)) {
@@ -20,15 +19,38 @@ public class JsonManager {
             JSONArray accountsArray = (JSONArray) jsonObject.get("accounts");
             for (Object obj : accountsArray) {
                 JSONObject accountObject = (JSONObject) obj;
-                Account account = createAccountFromJson(accountObject);
-                if (account != null) {
-                    accounts.add(account);
-                }
+                accounts.add(createAccountFromJson(accountObject));
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
         return accounts.toArray(new Account[0]);
+    }
+
+    public int getCurrentDay() {
+        try (FileReader reader = new FileReader(BANKING_FILE)) {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            return ((Long) jsonObject.getOrDefault("currentDay", 1L)).intValue();  // Default to day 1 if not specified
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return 1;  // Default to day 1 on error
+        }
+    }
+
+    public void writeAccountsAndDay(Account[] accounts, int currentDay) {
+        JSONObject rootObject = new JSONObject();
+        rootObject.put("currentDay", currentDay);  // Store current day
+        JSONArray accountsArray = new JSONArray();
+        for (Account account : accounts) {
+            accountsArray.add(convertAccountToJson(account));
+        }
+        rootObject.put("accounts", accountsArray);
+
+        try (FileWriter writer = new FileWriter(BANKING_FILE)) {
+            writer.write(rootObject.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Account createAccountFromJson(JSONObject accountObject) {

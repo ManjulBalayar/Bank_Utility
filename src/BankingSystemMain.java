@@ -8,17 +8,20 @@ public class BankingSystemMain {
         JsonManager jsonManager = new JsonManager();
         Account[] accounts = jsonManager.readAccounts();
         bankManager.setAccounts(accounts);
+        int currentDay = jsonManager.getCurrentDay(); // Retrieve the current day from JSON
 
         System.out.println("Welcome to The ATM Machine and the Utility Company Banking System");
+        System.out.println("Today is Day: " + currentDay);
         while (true) {
             System.out.println("\nPlease select an option:");
             System.out.println("1. Deposit to Checking Account");
             System.out.println("2. Withdraw from Checking Account");
             System.out.println("3. Transfer from Checking to Savings");
-            System.out.println("4. Transfer from Savings to Checking");  // Added option
+            System.out.println("4. Transfer from Savings to Checking");
             System.out.println("5. Check Balances");
             System.out.println("6. Check Daily Transaction Limits");
-            System.out.println("7. Exit");
+            System.out.println("7. Move to Next Day");  // New Option for next day
+            System.out.println("8. Exit");
 
             int choice = scanner.nextInt();
             switch (choice) {
@@ -41,9 +44,14 @@ public class BankingSystemMain {
                     displayDailyLimits();
                     break;
                 case 7:
+                    currentDay++;
+                    System.out.println("Moving to Day: " + currentDay);
+                    bankManager.endOfDayProcessing();  // Reset limits
+                    break;
+                case 8:
                     System.out.println("Resetting daily limits and exiting...");
-                    bankManager.endOfDayProcessing();  // Ensuring this is correctly named
-                    jsonManager.writeAccounts(bankManager.getAccounts());
+                    bankManager.endOfDayProcessing();  // Reset limits
+                    jsonManager.writeAccountsAndDay(bankManager.getAccounts(), currentDay);  // Save current day
                     System.exit(0);
                     break;
                 default:
