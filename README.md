@@ -88,18 +88,51 @@ At the start of the first iteration, the day is set to 1. Inside of the utilitie
 
 ### Menu Options
 
+#### Initial Start Menu
+
 - **Option 1: Create an Account**
   - Allows deposits up to $5000 per day into the checking account. This can be accomplished in one or more transactions.
 
 - **Option 2: Login to your Account**
   - Brings you to another page where you can choose to login using your username or your account number.
-  - **Option 1: Login using username**
-    -Provide username and password. You get 3 attempts before the program shuts down. Upon successful sign in you will be brought to the main access page of the utility system.
-  - **Option 2: Login using account number**
-    -Provide acctNum and password. You get 3 attempts before the program shuts down. Upon successful sign in you will be brought to the main access page of the utility system.
 
-- **Option 10: Exit**
+- **Option 3: Exit**
   - Exits the application, saving all current data until the next login.
+ 
+#### Login Menu
+- **Option 1: Login using username**
+  -Provide username and password. You get 3 attempts before the program shuts down. Upon successful sign in you will be brought to the main access page of the utility system.
+  
+- **Option 2: Login using account number**
+  -Provide acctNum and password. You get 3 attempts before the program shuts down. Upon successful sign in you will be brought to the main access page of the utility system.
+
+#### Main Access Menu
+- **Option 1: Go to the next day**
+  - Increments day count.
+
+- **Option 2: Access Utility Account**
+  - Brings you to another menu to check payment history or pay upcoming bills.
+
+- **Option 3: Quit**
+  - Brings you back to login page.
+ 
+#### Utility Account
+- **Option 1: Check Payment History**
+  - Shows up to three of the last bills paid. The brings you back to the three Utility Account options to choose from.
+
+- **Option 2: Pay Upcoming Bill**
+  - Displays up to three upcoming bills to choose to pay from. Gives you the option to choose one of the bills to pay by due date. Or by pressing 0, you can go back to this utility accounts menu.
+
+- **Option 3: Exit**
+  - Brings you back to main access menu.
+ 
+#### Pay Upcoming Bill
+- **Option 1: Give a due date**
+  - Allows you to pay a bill based off of due date. When you give a due date, you will be asked if you want to pay the bill that is displayed. If yes, it will be paid from your checking account. If not, you go back to the utility account menu.
+
+- **Option 2: Input 0**
+  - Brings you back to the utility account menu.
+
 
 ### System Requirements
 
@@ -109,5 +142,6 @@ At the start of the first iteration, the day is set to 1. Inside of the utilitie
 ### Setup
 
 1. Ensure Java and JSON-simple are correctly installed. Initial JSON file 'banking.json' should contain value currentDay: 1, dailyDeposited: 0.0, dailyWithdrawn: 0.0, dailyTransferred: 0.0. If not in the correct format, feel free to change.
-2. Clone the repository or download the source code.
-3. Compile and run `BankSystemMain.java` using your Java IDE or from the command line.
+2. Initial JSON file 'utilities.json' should contain values days: 1, password: {}, username: {}, acctNum:0, and bills: [{amount: 0, dueDate: 0, status: false}] (some variation of this format for bills). If not in the correct format, feel free to change
+3. Clone the repository or download the source code.
+4. Compile and run `UtilitySystemMain.java` using your Java IDE or from the command line.
