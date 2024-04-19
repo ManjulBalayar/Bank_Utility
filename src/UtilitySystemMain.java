@@ -10,116 +10,122 @@ import java.io.FileWriter;
 
 public class UtilitySystemMain {
 
+    // Global variables to store account information
     private static int acctNum, day;
     private static String username, password;
-
 
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
-        int menuSelect = 0;
-        int subMenuSelect = 0;
+        int choice = 0;
+        int subChoice = 0;
         System.out.println("Welcome to Utilities Services System!");
         System.out.println("Today is Day: " + Helper.getDay());
 
         while (true) {
-            int choice;
+            // Main menu loop
             while (true) {
+                // Display main menu options
                 System.out.println("\nPlease select an option:");
                 System.out.println("1. Create an Account");
                 System.out.println("2. Login to your Account");
                 System.out.println("3. Exit");
                 try {
-                    choice = Integer.parseInt(scan.next());
+                    choice = Integer.parseInt(scan.next()); // Get user choice
                     if (choice < 1 || choice > 3) {
                         System.out.println("Invalid Input. Please enter a valid number.");
                     } else {
-                        break;
+                        break; // Break loop if valid choice
                     }
 
                 } catch (Exception e) {
-                    System.out.println("Invalid Input");
+                    System.out.println("Invalid Input"); // Handle invalid input
                 }
             }
-            if (choice == 1) {
+
+            if (choice == 1) { // Create Account
+                // Prompt user for account details
                 System.out.println("-----Creating Account-----");
                 System.out.println("Enter Username: ");
                 username = scan.next();
                 System.out.println("Enter password: ");
                 password = scan.next();
 
-                // Create a Random object
+                // Generate a random 6-digit account number
                 Random random = new Random();
-
-                // Generate a random 6-digit number
                 acctNum = 100000 + random.nextInt(900000);
 
-                Helper.setAccount();
+                // Set account information using Helper class
+                Helper.setAccount(username, password, acctNum);
 
                 System.out.println("Account Successfully Created!");
                 System.out.println("Your account number is: " + acctNum);
-            } else if (choice == 2) {
-//            	while (true) {
-//                    System.out.println("Enter 1 to use username or 2 for account number: ");
-//                    try {
-//                        input = Integer.parseInt(scan.next());
-//                        break;
-//                    } catch (Exception e) {
-//                        System.out.println("Invalid Input");
-//                    }
-//                    if(input == 1){
-//                        int i;
-//                        for(i = 0; i < 3; i++){
-//                            System.out.println("Input username: ");
-//                            String username = scan.next();
-//                            System.out.println("Input password: ");
-//                            String password = scan.next();
-//                            if(utilAcc.checkPassword(password) && utilAcc.checkUsername(username)){
-//                                System.out.println("Successful Sign-in");
-//                                break;
-//                            } else{
-//                                System.out.println("Incorrect Username or Password");
-//                            }
-//                        }
-//                        if(i >= 3){
-//                            System.out.println("Too many unsuccessful login attempts.");
-//                            System.out.println("Exiting program...");
-//                            return;
-//                        }
-//                        break;
-//                    }else if(input == 2){
-//                        int i;
-//                        for(i = 0; i < 3; i++){
-//                            int number;
-//                            while(true) {
-//                                try {
-//                                    System.out.println("Input account number: ");
-//                                    number = Integer.parseInt(scan.next());
-//                                    break;
-//                                } catch (Exception e) {
-//                                    System.out.println("Invalid Input");
-//                                }
-//                            }
-//                            System.out.println("Input password: ");
-//                            String password = scan.next();
-//                            if(utilAcc.checkPassword(password) && utilAcc.checkAccountNum(number)){
-//                                System.out.println("Successful Sign-in");
-//                                break;
-//                            } else{
-//                                System.out.println("Incorrect Account Number or Password");
-//                            }
-//                        }
-//                        if(i >= 3){
-//                            System.out.println("Too many unsuccessful login attempts.");
-//                            System.out.println("Exiting program...");
-//                            return;
-//                        }
-//                        break;
-//                    }else{
-//                        System.out.println("Invalid Input");
-//                    }
-//                }
-            } else if (choice == 3) {
+            } else if (choice == 2) { // Login
+                while (true) {
+                    // Prompt user for login method
+                    System.out.println("\nPlease select an option:");
+                    System.out.println("1. Login using username");
+                    System.out.println("2. Login using account number");
+                    try {
+                        choice = Integer.parseInt(scan.next());
+                        if (choice < 1 || choice > 3) {
+                            System.out.println("Invalid Input. Please enter a valid number.");
+                        } else {
+                            break;
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println("Invalid Input");
+                    }
+                }
+                if (choice == 1) { // Login using username
+                    // Attempt login up to 3 times
+                    int i;
+                    for (i = 0; i < 3; i++) {
+                        System.out.println("Input username: ");
+                        String username = scan.next();
+                        System.out.println("Input password: ");
+                        String password = scan.next();
+                        if (username.equals(Helper.getUsername()) && password.equals(Helper.getPassword())) {
+                            System.out.println("Successful Sign-in");
+                            break;
+                        } else {
+                            System.out.println("Incorrect Username or Password");
+                        }
+                    }
+                    if (i >= 3) {
+                        // Exit if login attempts exceed 3
+                        System.out.println("Too many unsuccessful login attempts.");
+                        System.out.println("Exiting program...");
+                        return;
+                    }
+                } else if (choice == 2) { // Login using account number
+                    int i;
+                    for (i = 0; i < 3; i++) {
+                        int acctNumber = 0;
+                        try {
+                            System.out.println("Input account number: ");
+                            acctNumber = Integer.parseInt(scan.next());
+                        } catch (Exception e) {
+                            System.out.println("Invalid Input");
+                        }
+                        System.out.println("Input password: ");
+                        String password = scan.next();
+                        if (password.equals(Helper.getPassword()) && acctNumber == Helper.getAcctNum()) {
+                            System.out.println("Successful Sign-in");
+                            break;
+                        } else {
+                            System.out.println("Incorrect Account Number or Password");
+                        }
+                    }
+                    if (i >= 3) {
+                        // Exit if login attempts exceed 3
+                        System.out.println("Too many unsuccessful login attempts.");
+                        System.out.println("Exiting program...");
+                        return;
+                    }
+                }
+            } else if (choice == 3) { // Exit
                 System.out.println("Thanks you! Come Again!");
                 break;
             }
@@ -135,26 +141,25 @@ public class UtilitySystemMain {
 
                 // Scan Menu Select Input
                 while (true) {
-                    System.out.print("Input: ");
                     while (true) {
                         try {
-                            menuSelect = scan.nextInt();
+                            choice = scan.nextInt();
                             break;
                         } catch (Exception e) {
                             System.out.println("Invalid Input");
                         }
                     }
                     System.out.println();
-                    if (menuSelect < 1 || menuSelect > 3) {
+                    if (choice < 1 || choice > 3) {
                         System.out.println("Invalid Input");
                     } else {
                         break;
                     }
                 }
-                if (menuSelect == 1) { // Increment Day
+                if (choice == 1) { // Increment Day
                     day++;
                     Helper.setDay(day);
-                } else if (menuSelect == 2) { // Utility Menu Access
+                } else if (choice == 2) { // Utility Menu Access
                     while (true) {
                         System.out.println("Please select a Utility Account action below:");
                         System.out.println("1: Check Payment History");
@@ -165,29 +170,82 @@ public class UtilitySystemMain {
                         while (true) {
                             while (true) {
                                 try {
-                                    System.out.print("Input: ");
-                                    subMenuSelect = scan.nextInt();
+                                    subChoice = scan.nextInt();
                                     break;
                                 } catch (Exception e) {
                                     System.out.println("Invalid Input");
                                 }
                             }
                             System.out.println();
-                            if (subMenuSelect < 1 || subMenuSelect > 3) {
+                            if (subChoice < 1 || subChoice > 3) {
                                 System.out.println("Invalid Input");
                             } else {
                                 break;
                             }
                         }
 
-                        if (subMenuSelect == 1) { // Payment history
+                        if (subChoice == 1) { // Payment history
+                            Helper.paymentHistory();
+                        } else if (subChoice == 2) { // Pay Payment
+                            int unpaidCount = 0;
+                            int input = 0;
+                            double amountDue = 0.0;
+                            double balance = 0.0;
+                            String option = "";
+                            unpaidCount = Helper.unpaidBills();
+                            if (unpaidCount == 0) {
+                                System.out.println("You have no bills to pay! Congrats!\n");
+                            } else {
+                                System.out.println("Enter the due date of the bill you'd like to pay or press 0 to exit.");
+                                while (true) {
+                                    try {
+                                        input = Integer.parseInt(scan.next());
+                                        if (input < 0) {
+                                            System.out.println("Invalid Input. Please enter a valid number.");
+                                        } else {
+                                            break;
+                                        }
 
-                        } else if (subMenuSelect == 2) { // Pay Payment
+                                    } catch (Exception e) {
+                                        System.out.println("Invalid Input");
+                                    }
+                                }
 
-                            if (subMenuSelect == 1) {
-//
+                                if (input == 0) {
+                                    System.out.println("Exiting...");
+                                    break;
+                                } else {
+                                    amountDue = Helper.findBillByDueDate(input);
+
+                                    if (amountDue == 0) {
+                                        System.out.println("Exiting...");
+                                        break;
+                                    } else {
+                                        while (true) {
+                                            try {
+                                                option = scan.next();
+                                                if (!option.equalsIgnoreCase("Y") && !option.equalsIgnoreCase("N")) {
+                                                    System.out.println("Invalid Input. Please enter a valid character.");
+                                                } else {
+                                                    break;
+                                                }
+
+
+                                            } catch (Exception e) {
+                                                System.out.println("Invalid Input");
+                                            }
+                                        }
+                                        if (option.equalsIgnoreCase("N")) {
+                                            System.out.println("Going back to bill selection screen.\n");
+                                        } else {
+                                            balance = Helper.subtractFromCheckingBalance(amountDue);
+                                            System.out.println("Your current checking balance: " + balance);
+                                            System.out.println("Thank you for paying your bill!\n");
+                                            Helper.changeBillStatus(input);
+                                        }
+                                    }
+                                }
                             }
-
                         } else {
                             break;
                         }
